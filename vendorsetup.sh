@@ -1,3 +1,0 @@
-add_lunch_combo omni_lexus-user
-add_lunch_combo omni_lexus-userdebug
-add_lunch_combo omni_lexus-eng
