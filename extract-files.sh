@@ -8,7 +8,7 @@
 
 set -e
 
-DEVICE=OP6131L1
+DEVICE=lexus
 VENDOR=oneplus
 
 # Load extract_utils and do some sanity checks

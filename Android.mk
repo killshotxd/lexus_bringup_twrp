@@ -7,6 +7,6 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE),OP6131L1)
+ifeq ($(TARGET_DEVICE),lexus)
 include $(call all-subdir-makefiles,$(LOCAL_PATH))
 endif

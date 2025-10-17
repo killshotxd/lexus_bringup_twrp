@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/oneplus/OP6131L1
+DEVICE_PATH := device/oneplus/lexus
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
@@ -49,8 +49,8 @@ TARGET_SCREEN_DENSITY := 560
 BOARD_BOOTIMG_HEADER_VERSION := 4
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 BOARD_KERNEL_IMAGE_NAME := Image
-TARGET_KERNEL_CONFIG := OP6131L1_defconfig
-TARGET_KERNEL_SOURCE := kernel/oneplus/OP6131L1
+TARGET_KERNEL_CONFIG := lexus_defconfig
+TARGET_KERNEL_SOURCE := kernel/oneplus/lexus
 
 # Kernel - prebuilt
 TARGET_FORCE_PREBUILT_KERNEL := true

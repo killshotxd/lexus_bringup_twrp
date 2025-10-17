@@ -12,11 +12,11 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Inherit some common Omni stuff.
 $(call inherit-product, vendor/omni/config/common.mk)
 
-# Inherit from OP6131L1 device
-$(call inherit-product, device/oneplus/OP6131L1/device.mk)
+# Inherit from lexus device
+$(call inherit-product, device/oneplus/lexus/device.mk)
 
-PRODUCT_DEVICE := OP6131L1
-PRODUCT_NAME := omni_OP6131L1
+PRODUCT_DEVICE := lexus
+PRODUCT_NAME := omni_lexus
 PRODUCT_BRAND := OnePlus
 PRODUCT_MODEL := CPH2709
 PRODUCT_MANUFACTURER := oneplus

@@ -6,9 +6,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_OP6131L1.mk
+    $(LOCAL_DIR)/omni_lexus.mk
 
 COMMON_LUNCH_CHOICES := \
-    omni_OP6131L1-user \
-    omni_OP6131L1-userdebug \
-    omni_OP6131L1-eng
+    omni_lexus-user \
+    omni_lexus-userdebug \
+    omni_lexus-eng
