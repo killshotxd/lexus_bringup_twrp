@@ -13,6 +13,14 @@ TARGET_USES_64_BIT_BINDER := true
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=     # (leave empty since 32-bit userspace not needed)
 
+# Soong policy paths (silence deprecation warnings)
+SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += \
+    $(DEVICE_PATH)/sepolicy/public
+
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += \
+    $(DEVICE_PATH)/sepolicy/private
+
+
 
 # Product partition file system type (required)
 BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
