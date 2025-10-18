@@ -1,103 +1,17 @@
-# DEVICE_PATH := device/oneplus/lexus
+DEVICE_PATH := device/oneplus/lexus
 
-# # Minimal manifest builds
-# ALLOW_MISSING_DEPENDENCIES := true
+# Allow missing dependencies for minimal manifest builds
+ALLOW_MISSING_DEPENDENCIES := true
 
-# # Platform
-# TARGET_BOARD_PLATFORM := pineapple
-# TARGET_ARCH := arm64
-# TARGET_ARCH_VARIANT := armv8-2a
-# TARGET_CPU_VARIANT := kryo385
+# Platform / Architecture
+TARGET_BOARD_PLATFORM := pineapple
+TARGET_ARCH := arm64
+TARGET_ARCH_VARIANT := armv8-2a
+TARGET_CPU_VARIANT := kryo385
+TARGET_2ND_ARCH :=     # (leave empty since 32-bit userspace not needed)
+TARGET_USES_64_BIT_BINDER := true
 
-# # A/B and dynamic partitions
-# AB_OTA_UPDATER := true
-# BOARD_USES_RECOVERY_AS_BOOT := true
-# BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
-# TARGET_COPY_OUT_PRODUCT := product
-# TARGET_COPY_OUT_SYSTEM_EXT := system_ext
-# TARGET_COPY_OUT_VENDOR := vendor
-# TARGET_COPY_OUT_ODM := odm
-# BOARD_SUPER_PARTITION_PARTITION_LIST := system system_ext product vendor odm vendor_dlkm system_dlkm
-# BOARD_SUPER_PARTITION_SIZE := 9126805504
-# BOARD_SUPER_PARTITION_GROUPS := oneplus_dynamic_partitions
-# BOARD_ONEPLUS_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext product vendor odm vendor_dlkm system_dlkm
-# BOARD_ONEPLUS_DYNAMIC_PARTITIONS_SIZE := 9122611200
-# TARGET_USES_METADATA_PARTITION := true
-
-# # AVB
-# BOARD_AVB_ENABLE := true
-# BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
-# BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
-# BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA2048
-# BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 0
-# BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 0
-
-# # Anti-rollback hack (keep TWRP bootable)
-# PLATFORM_SECURITY_PATCH := 2099-12-31
-# VENDOR_SECURITY_PATCH := 2099-12-31
-# PLATFORM_VERSION := 16.1.0
-
-# # Prebuilt kernel / images
-# TARGET_FORCE_PREBUILT_KERNEL := true
-# TARGET_PREBUILT_KERNEL := $(TOP)/prebuilt/Image.gz-dtb
-# BOARD_PREBUILT_DTBOIMAGE := $(TOP)/prebuilt/dtbo.img
-# TARGET_RECOVERY_PREBUILT := $(TOP)/prebuilt/recovery.img
-# BOARD_INCLUDE_RECOVERY_DTBO := true
-# BOARD_BOOTIMG_HEADER_VERSION := 4
-# BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-# BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 earlycon=msm_geni_serial,0x04C8C000 androidboot.hardware=qcom
-# BOARD_KERNEL_BASE := 0x00000000
-
-# # Vendor boot (move large ramdisk pieces)
-# BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
-# BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
-
-# # File systems
-# TARGET_USERIMAGES_USE_F2FS := true
-# TARGET_USERIMAGES_USE_EXT4 := true
-
-# # Recovery
-# TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
-# TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
-
-# # TWRP UI/Features
-# TW_THEME := portrait_hdpi
-# TW_EXTRA_LANGUAGES := true
-# TW_USE_TOOLBOX := true
-# TW_USE_NEW_MINADBD := true
-# TW_INCLUDE_RESETPROP := true
-# TW_INCLUDE_LPDUMP := true
-# TW_INCLUDE_LOGCAT := true
-# TW_INCLUDE_REPACKTOOLS := true
-# TW_EXCLUDE_SUPERSU := true
-# TW_INCLUDE_FASTBOOTD := true
-# TW_HAS_FASTBOOTD := true
-# TW_NO_EXFAT_FUSE := true
-# TW_INCLUDE_NTFS_3G := true
-# TW_DEFAULT_LANGUAGE := en
-# TW_INPUT_BLACKLIST := "hbtp_vm"
-# TW_NO_SCREEN_BLANK := true
-# TW_INCLUDE_CRYPTO := true
-# TW_CRYPTO_USE_SYSTEM_VOLD := true
-# TW_INCLUDE_FBE_METADATA_DECRYPT := true
-# TW_FORCE_KEYMASTER_VER := true
-# TW_USE_FSCRYPT_POLICY := 2
-
-# # Additional optimizations
-# TW_EXCLUDE_APEX := true
-# TW_EXCLUDE_DEFAULT_USB_INIT := true
-# TW_SUPPORT_INPUT_AIDL_HAPTICS := true  # Modern haptics support
-# TW_NO_HAPTICS := false  # Enable haptics
-
-# # Brightness and splash (adjust these if needed)
-# TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
-# TW_MAX_BRIGHTNESS := 2047
-# TW_DEFAULT_BRIGHTNESS := 1200
-
-
-
-
-# A/B and dynamic partitions
+# A/B and Dynamic Partitions
 AB_OTA_UPDATER := true
 BOARD_USES_RECOVERY_AS_BOOT := false
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
@@ -112,7 +26,7 @@ BOARD_ONEPLUS_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext product ven
 BOARD_ONEPLUS_DYNAMIC_PARTITIONS_SIZE := 9122611200
 TARGET_USES_METADATA_PARTITION := true
 
-# AVB
+# AVB (Android Verified Boot)
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
 BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
@@ -125,7 +39,7 @@ PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 16.1.0
 
-# Prebuilt kernel / dtbo
+# Kernel and DTBO (Prebuilts)
 TARGET_FORCE_PREBUILT_KERNEL := true
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz-dtb
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
@@ -135,19 +49,20 @@ BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 earlycon=msm_geni_serial,0x04C8C000 androidboot.hardware=qcom
 BOARD_KERNEL_BASE := 0x00000000
 
-# No vendor_boot movement (we have a dedicated recovery partition)
+# Since the device has a dedicated recovery partition, do NOT use vendor_boot for resources
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := false
 BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := false
 
-# File systems
+# Filesystems
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_USERIMAGES_USE_EXT4 := true
 
-# Recovery
+# Recovery Configuration
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
+BOARD_HAS_LARGE_FILESYSTEM := true
 
-# TWRP UI/Features
+# TWRP UI / Features
 TW_THEME := portrait_hdpi
 TW_EXTRA_LANGUAGES := true
 TW_USE_TOOLBOX := true
@@ -169,14 +84,17 @@ TW_CRYPTO_USE_SYSTEM_VOLD := true
 TW_INCLUDE_FBE_METADATA_DECRYPT := true
 TW_FORCE_KEYMASTER_VER := true
 TW_USE_FSCRYPT_POLICY := 2
+TW_INCLUDE_LIBRESETPROP := true
+TW_INCLUDE_LIBSTATSD := false
 
-# Additional optimizations
+# Extra Options
 TW_EXCLUDE_APEX := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 TW_NO_HAPTICS := false
 
-# Brightness and splash
+# Brightness & Splash
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 TW_MAX_BRIGHTNESS := 2047
 TW_DEFAULT_BRIGHTNESS := 1200
+TW_SCREEN_BLANK_ON_BOOT := false
