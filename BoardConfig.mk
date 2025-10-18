@@ -38,6 +38,7 @@ AB_OTA_PARTITIONS := \
     boot \
     dtbo \
     vbmeta \
+    vendor_boot \   
     system \
     system_ext \
     product \
@@ -60,6 +61,7 @@ BOARD_ONEPLUS_DYNAMIC_PARTITIONS_SIZE := 9122611200
 TARGET_USES_METADATA_PARTITION := true
 
 
+
 # AVB (Android Verified Boot)
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
@@ -78,10 +80,12 @@ TARGET_FORCE_PREBUILT_KERNEL := true
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz-dtb
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 BOARD_INCLUDE_RECOVERY_DTBO := true
-BOARD_BOOTIMG_HEADER_VERSION := 4
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 earlycon=msm_geni_serial,0x04C8C000 androidboot.hardware=qcom
 BOARD_KERNEL_BASE := 0x00000000
+
+# Recovery image partition size (100MB)
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
 
 # Since the device has a dedicated recovery partition, do NOT use vendor_boot for resources
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := false
