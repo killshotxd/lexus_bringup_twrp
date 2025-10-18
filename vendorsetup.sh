@@ -1,1 +1,1 @@
-add_lunch_combo omni_lexus-eng
+add_lunch_combo twrp_lexus-eng
