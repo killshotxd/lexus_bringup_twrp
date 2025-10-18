@@ -13,6 +13,14 @@ TARGET_USES_64_BIT_BINDER := true
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=     # (leave empty since 32-bit userspace not needed)
 
+
+# Product partition file system type (required)
+BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
+
 # A/B and Dynamic Partitions
 AB_OTA_UPDATER := true
 BOARD_USES_RECOVERY_AS_BOOT := false
@@ -100,3 +108,5 @@ TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 TW_MAX_BRIGHTNESS := 2047
 TW_DEFAULT_BRIGHTNESS := 1200
 TW_SCREEN_BLANK_ON_BOOT := false
+
+
