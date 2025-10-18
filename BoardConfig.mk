@@ -12,7 +12,6 @@ TARGET_2ND_ARCH :=     # (leave empty since 32-bit userspace not needed)
 TARGET_USES_64_BIT_BINDER := true
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=     # (leave empty since 32-bit userspace not needed)
-TARGET_BUILD_APPS :=     # (leave empty since no apps needed in recovery)
 
 # A/B and Dynamic Partitions
 AB_OTA_UPDATER := true
