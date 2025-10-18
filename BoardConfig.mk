@@ -34,11 +34,11 @@ BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
 AB_OTA_UPDATER := true
 
 # Required for A/B devices - list all OTA partitions
+# A/B OTA Partitions
 AB_OTA_PARTITIONS := \
     boot \
     dtbo \
     vbmeta \
-    vendor_boot \   
     system \
     system_ext \
     product \
@@ -46,6 +46,7 @@ AB_OTA_PARTITIONS := \
     odm \
     vendor_dlkm \
     system_dlkm
+
 
 BOARD_USES_RECOVERY_AS_BOOT := false
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
