@@ -21,8 +21,23 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
 
+
 # A/B and Dynamic Partitions
 AB_OTA_UPDATER := true
+
+# Required for A/B devices - list all OTA partitions
+AB_OTA_PARTITIONS := \
+    boot \
+    dtbo \
+    vbmeta \
+    system \
+    system_ext \
+    product \
+    vendor \
+    odm \
+    vendor_dlkm \
+    system_dlkm
+
 BOARD_USES_RECOVERY_AS_BOOT := false
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
 TARGET_COPY_OUT_PRODUCT := product
@@ -35,6 +50,7 @@ BOARD_SUPER_PARTITION_GROUPS := oneplus_dynamic_partitions
 BOARD_ONEPLUS_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext product vendor odm vendor_dlkm system_dlkm
 BOARD_ONEPLUS_DYNAMIC_PARTITIONS_SIZE := 9122611200
 TARGET_USES_METADATA_PARTITION := true
+
 
 # AVB (Android Verified Boot)
 BOARD_AVB_ENABLE := true
