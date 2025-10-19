@@ -1,125 +1,137 @@
-# TWRP Device Tree for OnePlus CPH2709 (lexus)
+# lexus_bringup_twrp
 
-This is a modernized **TWRP bring-up device tree** for **OnePlus CPH2709 (lexus)** based on **Qualcomm SM8475 (Pineapple)**.
+TWRP recovery bringup for the Lexus (Qualcomm) device — device tree, vendor blobs and recovery images needed to build and run TWRP on the target device.
 
----
+Maintainer: Killshotxd
 
-## 📱 Device Info
+## What this repository contains
 
-| Property               | Value                                                 |
-| ---------------------- | ----------------------------------------------------- |
-| **Device**             | OnePlus CPH2709                                       |
-| **Codename**           | `lexus`                                               |
-| **Platform**           | Qualcomm SM8475 (Pineapple)                           |
-| **Architecture**       | ARM64                                                 |
-| **Partition Scheme**   | A/B, Dynamic                                          |
-| **Recovery Partition** | ✅ Dedicated (`BOARD_USES_RECOVERY_AS_BOOT := false`) |
-| **Android Base**       | Android 15 / OxygenOS 15                              |
-| **Manifest Base**      | minimal-manifest-twrp `twrp-12.1`                     |
-| **Build Status**       | ✅ Compiling successfully                             |
+- Device makefiles and product configs (AndroidProducts.mk, BoardConfig.mk, device.mk, twrp_lexus.mk)
+- Recovery rootfs and vendor files under `twrp/recovery/` (binaries, libraries, init scripts, firmware)
+- Prebuilt kernel in `prebuilt/kernel`
+- Device configuration files (system.prop, vendor.prop, recovery.fstab, vendorsetup.sh)
+- Security certificates in `security/`
 
----
+This repo is focused on packaging a working TWRP recovery image and the minimal vendor blobs and configs required for the device to boot into recovery.
 
-## ⚙️ Features
+## Quick start (developer)
 
-- ✅ Dynamic partitions
-- ✅ A/B OTA support
-- ✅ FastbootD integration
-- ✅ Metadata & FBEv2 decryption hooks
-- ✅ AVB / DM-Verity disabled for TWRP
-- ✅ Prebuilt kernel, DTBO, and recovery placeholders
-- ✅ ext4 / f2fs / ntfs_3g support
-- ✅ Modern Soong SEPolicy paths
-- ✅ Clean build environment (no legacy add_lunch_combo)
+Prerequisites
 
----
+- Android build environment (repo, aosp sources or lineage/twrp manifests as applicable)
+- Java, gcc/clang, make, and other Android build dependencies
+- A build host with enough disk space (Android builds can require 100+ GB)
 
-## 📁 Directory Structure
+High level steps
 
-├── AndroidProducts.mk
-├── BoardConfig.mk
-├── recovery.fstab
-├── sepolicy/
-│ ├── public/
-│ └── private/
-├── twrp_lexus.mk
-├── vendorsetup.sh
-└── prebuilt/
-├── Image.gz-dtb
-├── dtbo.img
-└── recovery.img
+1. Sync or place this device tree into your Android/TWRP source tree under `device/vendor/lexus` (or appropriate path).
+1. Place the `prebuilt/kernel` or build kernel for the device and ensure any required vendor blobs are available in the vendor partition tree.
+1. Build using the TWRP/Android build system (example below is illustrative — adapt to your tree):
 
----
+```bash
+# Example (run from your Android/TWRP source root)
+source build/envsetup.sh
+lunch twrp_device-userdebug
+make recoveryimage -j$(nproc)
+```
 
-## 🏗️ Build Instructions
+1. Flash the produced `recovery.img` to the device using fastboot (device must be unlocked and in fastboot mode):
 
-### 1️⃣ Initialize TWRP manifest
-
-repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
-repo sync
-
-### 2️⃣ Clone this device tree
-
-git clone https://github.com/killshotxd/lexus_bringup_twrp.git device/oneplus/lexus
-
-### 3️⃣ Build TWRP
-
-export ALLOW_MISSING_DEPENDENCIES=true
-. build/envsetup.sh
-lunch twrp_lexus-eng
-mka recoveryimage -j8
-
-### 4️⃣ Output
-
-out/target/product/lexus/recovery.img
-
----
-
-## 🔧 Flashing Instructions
-
-### 🧪 Test Boot (Recommended)
-
-fastboot boot out/target/product/lexus/recovery.img
-
-### 💾 Flash Permanently
-
+```bash
 fastboot flash recovery out/target/product/lexus/recovery.img
 fastboot reboot
+```
+
+Notes
+
+- The exact lunch target and output path will depend on how you integrate this device tree into your Android/TWRP build.
+- This repo does not contain the full Android source. You must build within a full TWRP/AOSP/LineageOS environment.
+
+## Repository layout (high level)
+
+- `AndroidProducts.mk` — product inclusion for the build
+- `BoardConfig.mk` — board-level build flags
+- `device.mk` — device makefile
+- `twrp_lexus.mk` — TWRP-specific packaging
+- `recovery.fstab` — recovery partition layout
+- `system.prop`, `vendor.prop` — property overrides
+- `prebuilt/kernel` — prebuilt kernel(s)
+- `security/otacert.x509.pem` — OTA cert(s)
+- `twrp/recovery/` — recovery root filesystem: init scripts, binaries, libs, vendor files, firmware
+
+## Tree + Grep: quick navigation helpers
+
+When working with bringup trees, it's common to want a quick visual of the directory structure (`tree`) and to search files (`grep`). Below are cross-platform examples you can run from the repository root.
+
+Linux / macOS / Git Bash (recommended when using Git on Windows)
+
+Show a compact tree (3 levels deep):
+
+```bash
+tree -L 3 -a
+```
+
+Show tree filtered to only show files/dirs that match "twrp" or "recovery":
+
+```bash
+tree -a | grep -i "twrp\|recovery"
+```
+
+Search for a symbol (for example, "init.recovery.qcom.rc") across the repo and show filenames and line numbers:
+
+```bash
+grep -RIn "init.recovery.qcom.rc" .
+```
+
+PowerShell (Windows built-in)
+
+List the directory tree recursively (rough equivalent):
+
+```powershell
+Get-ChildItem -Recurse -Force | Format-List FullName
+```
+
+Show directories up to a certain depth (PowerShell 3+):
+
+```powershell
+Get-ChildItem -Directory -Recurse | Where-Object { $_.FullName.Split([io.path]::DirectorySeparatorChar).Count -le ($pwd.Path.Split([io.path]::DirectorySeparatorChar).Count + 3) }
+```
+
+Search for text in files (grep equivalent):
+
+```powershell
+Select-String -Path * -Pattern "init.recovery.qcom.rc" -CaseSensitive:$false -List
+```
+
+Tip: If you have Git for Windows installed, use Git Bash which provides the familiar `tree`, `grep`, and other GNU utilities.
+
+## Common maintenance tasks
+
+- Update vendor blobs: place new files under `twrp/recovery/vendor` or update `prebuilt/kernel` and bump any build flags in `BoardConfig.mk`.
+- Add missing libraries: copy required so/ndk shims under `twrp/recovery/root/system/lib*` as needed.
+- Verify init scripts: ensure `init.recovery*.rc` files exist and reference correct device nodes.
+
+## Contributing
+
+1. Fork the repo and create a topic branch for your change.
+2. Keep commits focused and add a short, clear commit message describing the change.
+3. Open a pull request against `main` and mention the maintainer `@killshotxd` for review.
+
+## License
+
+This repository does not include a license file. If you intend to redistribute or publish changes, add a LICENSE file or clarify licensing with the maintainer.
+
+## Contact / Maintainer
+
+TeamWin (TWRP) – base recovery sources
+minimal-manifest-twrp – manifest base
+OnePlus – proprietary firmware
+Tree Base: grep
+Maintainer: Killshotxd
+GitHub: [https://github.com/killshotxd](https://github.com/killshotxd)
+
+If you need help integrating this tree into a full build or want me to add example integration patches (device path, BoardConfig tweaks, or a sample `Android.mk`/`Android.bp`), open an issue or PR and mention the device details.
 
 ---
 
-## 🧠 Notes
-
-- `BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600` (100 MB)
-- `BOARD_USES_RECOVERY_AS_BOOT := false` → dedicated recovery partition
-- `AB_OTA_PARTITIONS` excludes `vendor_boot`
-- Kernel & DTBO prebuilts:
-  device/oneplus/lexus/prebuilt/Image.gz-dtb
-  device/oneplus/lexus/prebuilt/dtbo.img
-
----
-
-## 🧩 Credits
-
-- **TeamWin (TWRP)** – base recovery sources
-- **minimal-manifest-twrp** – manifest base
-- **OnePlus** – proprietary firmware
-- **@killshotxd** – device bring-up & modernization
-- **grep** – helping in bring-up
-
----
-
-## 👨‍💻 Maintainer
-
-**(@killshotxd)**
-
----
-
-## 🪄 License
-
-This project is licensed under the **GNU General Public License v3.0 (GPL-3)**.  
-You are free to use, modify, and redistribute with proper attribution.
-
----
-
-> “Because even recovery deserves to look premium.” 💫
+Last updated: 2025-10-19
